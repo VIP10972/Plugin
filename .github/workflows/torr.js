@@ -1,10 +1,12 @@
 // One-time call
 // Checking app installation
 var request = webOS.service.request('luna://com.webos.applicationManager', {
-  method: 'getAppLoadStatus',
-  parameters: { appId: 'torrserv.matrix.app' },
+  method: 'running',
+  parameters: { subscribe: true },
   onSuccess: function (inResponse) {
-    if (!inResponse.exist) {
+	var appArray = inResponse.running;
+	appArray.forEach( function(id){
+  		 if (id === 'torrserv.matrix.app' ) { return;}});
 	  var request = webOS.service.request('luna://com.webos.applicationManager', {
   		method: 'launch',
   		parameters: { id: 'torrserv.matrix.app' },
@@ -18,7 +20,7 @@ var request = webOS.service.request('luna://com.webos.applicationManager', {
     		// To-Do something
    		 return;
 		  },
-	})
+	});
       // To-Do something
     }
   },
